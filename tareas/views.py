@@ -4,13 +4,11 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from django.contrib.auth import login as iniciar_sesion
 from django.contrib.auth import logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from .forms import RegistroForm, TareaForm
 from .models import Tarea
-
-
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth import update_session_auth_hash
 
 @login_required(login_url='login')
 def inicio(request):
@@ -71,22 +69,34 @@ def cerrar_sesion(request):
 
 
 @login_required(login_url='login')
+def cambiar_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+            usuario = form.save()
+            update_session_auth_hash(request, usuario)
+            return redirect('inicio')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'tareas/cambiar_password.html', {'form': form})
+
+@login_required(login_url='login')
 def crear_tarea(request):
     if request.method == 'POST':
         form = TareaForm(request.POST)
 
         if form.is_valid():
-    tarea = form.save(commit=False)
+            tarea = form.save(commit=False)
 
-    if not tarea.asignada_a.is_active or tarea.asignada_a.is_staff or tarea.asignada_a.is_superuser:
-        form.add_error('asignada_a', 'Solo se pueden asignar tareas a empleados activos.')
+            if not tarea.asignada_a.is_active or tarea.asignada_a.is_staff or tarea.asignada_a.is_superuser:
+                form.add_error('asignada_a', 'Solo se pueden asignar tareas a empleados activos.')
+            else:
+                tarea.creada_por = request.user
+                tarea.save()
+                return redirect('inicio')
 
-    else:
-        tarea.creada_por = request.user
-        tarea.save()
-        return redirect('inicio')
-
-            return redirect('inicio')
     else:
         form = TareaForm()
 
@@ -107,20 +117,21 @@ def editar_tarea(request, id):
         form = TareaForm(request.POST, instance=tarea)
 
         if form.is_valid():
-    tarea_actualizada = form.save(commit=False)
+            tarea_actualizada = form.save(commit=False)
 
-    if (
-        not tarea_actualizada.asignada_a.is_active
-        or tarea_actualizada.asignada_a.is_staff
-        or tarea_actualizada.asignada_a.is_superuser
-    ):
-        form.add_error(
-            'asignada_a',
-            'Solo se pueden asignar tareas a empleados activos.'
-        )
-    else:
-        tarea_actualizada.save()
-        return redirect('inicio')
+            if (
+                not tarea_actualizada.asignada_a.is_active
+                or tarea_actualizada.asignada_a.is_staff
+                or tarea_actualizada.asignada_a.is_superuser
+            ):
+                form.add_error(
+                    'asignada_a',
+                    'Solo se pueden asignar tareas a empleados activos.'
+                )
+            else:
+                tarea_actualizada.save()
+                return redirect('inicio')
+
     else:
         form = TareaForm(instance=tarea)
 
@@ -128,7 +139,6 @@ def editar_tarea(request, id):
         'form': form,
         'tarea': tarea
     })
-
 
 @login_required(login_url='login')
 def eliminar_tarea(request, id):
