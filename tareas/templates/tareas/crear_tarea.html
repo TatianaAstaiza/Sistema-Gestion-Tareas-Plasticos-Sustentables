@@ -1,0 +1,44 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear tarea | Plásticos Sustentables</title>
+    <link rel="stylesheet" href="{% static 'tareas/estilos.css' %}">
+</head>
+<body>
+
+    <header class="encabezado">
+        <div class="marca">
+            <span class="icono">♻</span>
+            <div>
+                <h1>Plásticos Sustentables</h1>
+                <p>Gestión empresarial de tareas</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="panel">
+            <h2>Crear nueva tarea</h2>
+            <p>Registra una actividad y asígnala a un empleado.</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="boton-principal">
+                    Guardar tarea
+                </button>
+            </form>
+
+            <p class="volver">
+                <a href="{% url 'inicio' %}">Volver al inicio</a>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

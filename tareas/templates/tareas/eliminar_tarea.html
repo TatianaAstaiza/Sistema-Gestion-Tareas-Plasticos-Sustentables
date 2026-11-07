@@ -1,0 +1,48 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar tarea | Plásticos Sustentables</title>
+    <link rel="stylesheet" href="{% static 'tareas/estilos.css' %}">
+</head>
+<body>
+
+    <header class="encabezado">
+        <div class="marca">
+            <span class="icono">♻</span>
+            <div>
+                <h1>Plásticos Sustentables</h1>
+                <p>Gestión empresarial de tareas</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="panel">
+            <h2>Confirmar eliminación</h2>
+
+            <p>
+                ¿Estás seguro de que deseas eliminar la siguiente tarea?
+            </p>
+
+            <h3>{{ tarea.titulo }}</h3>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <button type="submit" class="boton-principal">
+                    Sí, eliminar tarea
+                </button>
+            </form>
+
+            <p class="volver">
+                <a href="{% url 'inicio' %}">Cancelar y volver al inicio</a>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>

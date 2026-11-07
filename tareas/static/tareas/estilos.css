@@ -1,0 +1,388 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f6f5;
+    color: #263b3b;
+}
+
+.encabezado {
+    background: #164e59;
+    color: white;
+    padding: 22px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.icono {
+    font-size: 38px;
+    color: #75d69b;
+}
+
+.marca h1 {
+    font-size: 23px;
+}
+
+.marca p {
+    font-size: 13px;
+    color: #c9e5df;
+    margin-top: 5px;
+}
+
+.usuario {
+    background: #236b6c;
+    padding: 11px 18px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.contenedor {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 25px;
+}
+
+.bienvenida {
+    background: linear-gradient(120deg, #176477, #269b78);
+    color: white;
+    padding: 45px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.etiqueta {
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    color: #c4f4dc;
+}
+
+.bienvenida h2 {
+    font-size: 29px;
+    margin-bottom: 12px;
+}
+
+.bienvenida p {
+    line-height: 1.6;
+}
+
+.resumen {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 30px;
+}
+
+.tarjeta {
+    background: white;
+    padding: 27px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #0000000d;
+}
+
+.simbolo {
+    display: inline-flex;
+    width: 45px;
+    height: 45px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 25px;
+    margin-bottom: 18px;
+}
+
+.azul {
+    background: #e1efff;
+    color: #2676b9;
+}
+
+.verde {
+    background: #ddf5e6;
+    color: #26965a;
+}
+
+.turquesa {
+    background: #dff5f1;
+    color: #238b7c;
+}
+
+.tarjeta h3 {
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.tarjeta p {
+    color: #718080;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.panel {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #0000000d;
+}
+
+.panel h2 {
+    margin-bottom: 12px;
+    color: #176477;
+}
+
+.panel p {
+    color: #718080;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 10px;
+    color: #829090;
+    font-size: 13px;
+}
+
+@media (max-width: 750px) {
+    .resumen {
+        grid-template-columns: 1fr;
+    }
+
+    .encabezado {
+        flex-direction: column;
+        gap: 18px;
+        align-items: flex-start;
+    }
+
+    .bienvenida {
+        padding: 28px;
+    }
+
+    .bienvenida h2 {
+        font-size: 23px;
+    }
+}
+
+/* FORMULARIO DE REGISTRO */
+
+.panel {
+    max-width: 650px;
+    margin: 35px auto;
+    padding: 35px;
+}
+
+.panel h2 {
+    color: #176477;
+    margin-bottom: 12px;
+}
+
+.panel > p {
+    color: #718080;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.panel form p {
+    margin-bottom: 16px;
+}
+
+.panel form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: #315456;
+}
+
+.panel form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbdad7;
+    border-radius: 7px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.panel form input:focus {
+    outline: none;
+    border-color: #269b78;
+    box-shadow: 0 0 0 3px #269b7820;
+}
+
+.panel form ul {
+    color: #718080;
+    font-size: 12px;
+    padding-left: 20px;
+    margin-top: 7px;
+}
+
+.boton-principal {
+    background: #218b70;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 12px;
+}
+
+.boton-principal:hover {
+    background: #176477;
+}
+
+.volver {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.volver a {
+    color: #218b70;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.volver a:hover {
+    text-decoration: underline;
+}
+
+
+/* AJUSTES DE ESPACIADO EN GESTIÓN DE TAREAS */
+
+.panel h3 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.panel .boton-principal {
+    display: inline-block;
+    width: auto;
+    margin: 10px 8px 10px 0;
+    padding: 12px 22px;
+    line-height: 1.5;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.panel > p {
+    margin-bottom: 20px;
+}
+
+.lista-tareas .tarjeta {
+    margin-bottom: 20px;
+    padding: 25px;
+}
+
+.lista-tareas .tarjeta p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.lista-tareas .tarjeta h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.titulo-tareas {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.acciones-tareas {
+    display: block;
+    margin: 15px 0 25px;
+}
+
+.acciones-tareas .boton-principal {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+}
+
+/* ORGANIZACIÓN DEL PANEL DE TAREAS */
+
+.panel .titulo-tareas {
+    display: block;
+    margin: 25px 0 20px;
+    clear: both;
+}
+
+.panel .acciones-tareas {
+    display: block;
+    position: static;
+    margin: 20px 0 30px;
+    clear: both;
+}
+
+.panel .acciones-tareas .boton-principal {
+    display: inline-flex;
+    position: static;
+    float: none;
+    width: auto;
+    margin: 0;
+    padding: 12px 22px;
+}
+
+.panel .sin-tareas {
+    display: block;
+    position: static;
+    clear: both;
+    margin: 25px 0 15px;
+    line-height: 1.6;
+}
+
+
+/* BUSQUEDA Y FILTROS DE TAREAS */
+
+.filtros-tareas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 15px;
+    margin: 20px 0 30px;
+    padding: 20px;
+    background: #f4f8f7;
+    border-radius: 10px;
+}
+
+.filtros-tareas div {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filtros-tareas label {
+    display: block;
+    margin-bottom: 8px;
+    color: #315456;
+    font-weight: bold;
+}
+
+.filtros-tareas input,
+.filtros-tareas select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbdad7;
+    border-radius: 7px;
+    font-size: 14px;
+    background: white;
+}
+
+.filtros-tareas .boton-principal {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    padding: 12px 20px;
+    text-decoration: none;
+    text-align: center;
+}

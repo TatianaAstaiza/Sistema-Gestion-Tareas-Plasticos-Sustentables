@@ -1,0 +1,49 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de empleados | Plásticos Sustentables</title>
+    <link rel="stylesheet" href="{% static 'tareas/estilos.css' %}">
+</head>
+<body>
+
+    <header class="encabezado">
+        <div class="marca">
+            <span class="icono">♻</span>
+            <div>
+                <h1>Plásticos Sustentables</h1>
+                <p>Gestión empresarial de tareas</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="panel">
+            <h2>Registro de empleados</h2>
+            <p>Completa tus datos para crear una cuenta en el sistema.</p>
+
+            {% if mensaje %}
+                <p>{{ mensaje }}</p>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <button type="submit" class="boton-principal">
+                    Crear cuenta
+                </button>
+            </form>
+
+            <p class="volver">
+                <a href="{% url 'inicio' %}">Volver al inicio</a>
+            </p>
+        </section>
+    </main>
+
+</body>
+</html>
