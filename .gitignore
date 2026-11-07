@@ -1,21 +1,47 @@
-﻿# Entorno virtual
+# Entorno virtual
 venv/
 env/
+.venv/
+ENV/
 
 # Archivos de Python
 __pycache__/
 *.py[cod]
+*$py.class
+*.so
 
-# Configuración local
+# Configuración privada
 .env
 .env.*
+!.env.example
+.envrc
 
 # Archivos de Django
 db.sqlite3
+db.sqlite3-journal
 staticfiles/
+local_settings.py
+*.log
+
+# Archivos de pruebas
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Archivos de empaquetado
+build/
+dist/
+*.egg-info/
 
 # Visual Studio Code
 .vscode/
+
+# Otros editores
+.idea/
+.spyderproject
+.spyproject
 
 # Archivos del sistema
 .DS_Store
