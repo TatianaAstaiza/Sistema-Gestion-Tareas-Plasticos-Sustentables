@@ -1,0 +1,184 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Tareas | Plásticos Sustentables</title>
+    <link rel="stylesheet" href="{% static 'tareas/estilos.css' %}">
+</head>
+<body>
+
+    <header class="encabezado">
+        <div class="marca">
+            <span class="icono">♻</span>
+            <div>
+                <h1>Plásticos Sustentables</h1>
+                <p>Gestión empresarial de tareas</p>
+            </div>
+        </div>
+<div class="usuario">
+    {% if user.is_authenticated %}
+        <span>Bienvenido, {{ user.first_name|default:user.username }}</span>
+
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+
+            <button type="submit" class="boton-principal">
+                Cerrar sesión
+
+            </button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Iniciar sesión</a>
+        <a href="{% url 'registro' %}">Registrarse</a>
+    {% endif %}
+</div>
+
+        </div>
+    </header>
+
+    <main class="contenedor">
+
+        <section class="bienvenida">
+            <div>
+                <p class="etiqueta">SISTEMA DE GESTIÓN</p>
+                <h2>Bienvenido a tu espacio de trabajo</h2>
+                <p>Organiza, consulta y administra las tareas de tu equipo.</p>
+            </div>
+        </section>
+
+        <section class="resumen">
+            <article class="tarjeta">
+                <span class="simbolo azul">▤</span>
+                <h3>Gestión de tareas</h3>
+                <p>Registra y administra las actividades de la empresa.</p>
+            </article>
+
+            <article class="tarjeta">
+                <span class="simbolo verde">✓</span>
+                <h3>Seguimiento</h3>
+                <p>Consulta el estado de las actividades pendientes y completadas.</p>
+            </article>
+
+            <article class="tarjeta">
+                <span class="simbolo turquesa">♧</span>
+                <h3>Trabajo en equipo</h3>
+                <p>Organiza las responsabilidades de los empleados.</p>
+            </article>
+        </section>
+
+<section class="panel">
+    <h2>Panel principal</h2>
+    <p>Consulta las actividades y responsabilidades que tienes asignadas.</p>
+
+    <h3 class="titulo-tareas">Mis tareas</h3>
+    
+<form method="GET" class="filtros-tareas">
+
+    <div>
+        <label for="buscar">Buscar tarea:</label>
+        <input
+            type="text"
+            id="buscar"
+            name="buscar"
+            placeholder="Escribe el título o descripción"
+            value="{{ busqueda }}"
+        >
+    </div>
+
+    <div>
+        <label for="estado">Filtrar por estado:</label>
+        <select id="estado" name="estado">
+            <option value="">Todas las tareas</option>
+            <option value="pendiente"
+                {% if estado_seleccionado == 'pendiente' %}selected{% endif %}>
+                Pendientes
+            </option>
+            <option value="completada"
+                {% if estado_seleccionado == 'completada' %}selected{% endif %}>
+                Completadas
+            </option>
+        </select>
+    </div>
+
+    <button type="submit" class="boton-principal">
+        Buscar y filtrar
+    </button>
+
+    <a href="{% url 'inicio' %}" class="boton-principal">
+        Limpiar filtros
+    </a>
+
+</form>
+
+
+<div class="acciones-tareas">
+    <a href="{% url 'crear_tarea' %}" class="boton-principal">
+        + Crear nueva tarea
+    </a>
+</div>
+
+    {% if tareas %}
+        <div class="lista-tareas">
+            {% for tarea in tareas %}
+                <article class="tarjeta">
+                    <h3>{{ tarea.titulo }}</h3>
+                    <p>{{ tarea.descripcion }}</p>
+                    <p><strong>Estado:</strong> {{ tarea.get_estado_display }}</p>
+                    
+<form method="POST" action="{% url 'cambiar_estado' tarea.id %}">
+    {% csrf_token %}
+
+    {% if tarea.estado == 'pendiente' %}
+        <button type="submit" class="boton-principal">
+            Marcar como completada
+        </button>
+    {% else %}
+        <button type="submit" class="boton-principal">
+            Marcar como pendiente
+        </button>
+    {% endif %}
+</form>
+
+                    <p>
+    <strong>Creada por:</strong> {{ tarea.creada_por.username }}
+</p>
+
+<p>
+    <strong>Asignada a:</strong> {{ tarea.asignada_a.username }}
+</p>
+                    <p><strong>Fecha límite:</strong> {{ tarea.fecha_limite|default:"Sin fecha límite" }}</p>
+                    <p>
+    <a href="{% url 'editar_tarea' tarea.id %}" class="boton-principal">
+        Editar tarea
+    </a>
+</p>
+
+
+<p>
+    <a href="{% url 'eliminar_tarea' tarea.id %}" class="boton-principal">
+        Eliminar tarea
+    </a>
+</p>
+
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+    <p class="sin-tareas">
+        No tienes tareas asignadas por el momento.
+    </p>
+{% endif %}
+</section>
+
+
+        <footer>
+            <p>© 2026 Plásticos Sustentables | Sistema de Gestión de Tareas</p>
+        </footer>
+
+    </main>
+
+</body>
+</html>
