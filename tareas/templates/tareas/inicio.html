@@ -21,7 +21,7 @@
 <div class="usuario">
     {% if user.is_authenticated %}
         <span>Bienvenido, {{ user.first_name|default:user.username }}</span>
-
+        <a href="{% url 'cambiar_password' %}">Cambiar contraseña</a>
         <form method="POST" action="{% url 'logout' %}">
             {% csrf_token %}
 
