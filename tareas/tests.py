@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import Tarea
+from django.db import connection
 
 
 class PruebasAutenticacion(TestCase):
@@ -145,3 +146,17 @@ class PruebasAutorizacionTareas(TestCase):
         self.assertEqual(respuesta.status_code, 404)
         self.tarea.refresh_from_db()
         self.assertEqual(self.tarea.estado, 'pendiente')
+from django.db import connection
+
+
+class PruebasConexionPostgreSQL(TestCase):
+
+    def test_motor_de_base_de_datos_postgresql(self):
+        self.assertEqual(connection.vendor, 'postgresql')
+
+    def test_consulta_a_base_de_datos(self):
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT 1')
+            resultado = cursor.fetchone()
+
+        self.assertEqual(resultado[0], 1)
