@@ -53,12 +53,10 @@ class PruebasCreacionTareas(TestCase):
             username='creador_prueba',
             password='Prueba12345'
         )
-
         self.empleado = User.objects.create_user(
             username='empleado_prueba',
             password='Prueba12345'
         )
-
         self.client.login(
             username='creador_prueba',
             password='Prueba12345'
@@ -89,13 +87,61 @@ class PruebasCreacionTareas(TestCase):
 
     def test_usuario_sin_autenticacion_no_crea_tarea(self):
         self.client.logout()
-
         respuesta = self.client.post(reverse('crear_tarea'), {
             'titulo': 'Tarea no autorizada',
             'descripcion': 'Prueba de acceso',
             'fecha_limite': '',
             'asignada_a': self.empleado.id
         })
-
         self.assertEqual(respuesta.status_code, 302)
         self.assertEqual(Tarea.objects.count(), 0)
+
+
+class PruebasAutorizacionTareas(TestCase):
+
+    def setUp(self):
+        self.creador = User.objects.create_user(
+            username='creador_permiso',
+            password='Prueba12345'
+        )
+        self.empleado = User.objects.create_user(
+            username='empleado_permiso',
+            password='Prueba12345'
+        )
+        self.otro_usuario = User.objects.create_user(
+            username='otro_usuario',
+            password='Prueba12345'
+        )
+
+        self.tarea = Tarea.objects.create(
+            titulo='Tarea de prueba',
+            descripcion='Verificar permisos',
+            creada_por=self.creador,
+            asignada_a=self.empleado
+        )
+
+        self.client.login(
+            username='otro_usuario',
+            password='Prueba12345'
+        )
+
+    def test_no_editar_tarea_de_otro_usuario(self):
+        respuesta = self.client.get(
+            reverse('editar_tarea', args=[self.tarea.id])
+        )
+        self.assertEqual(respuesta.status_code, 404)
+
+    def test_no_eliminar_tarea_de_otro_usuario(self):
+        respuesta = self.client.post(
+            reverse('eliminar_tarea', args=[self.tarea.id])
+        )
+        self.assertEqual(respuesta.status_code, 404)
+        self.assertTrue(Tarea.objects.filter(id=self.tarea.id).exists())
+
+    def test_no_cambiar_estado_tarea_de_otro_usuario(self):
+        respuesta = self.client.post(
+            reverse('cambiar_estado', args=[self.tarea.id])
+        )
+        self.assertEqual(respuesta.status_code, 404)
+        self.tarea.refresh_from_db()
+        self.assertEqual(self.tarea.estado, 'pendiente')
