@@ -73,4 +73,4 @@ El repositorio contiene la documentación y las evidencias del proceso de prueba
 - Yisel María Narváez García.
 - Leydi Tatiana Astaiza Chamorro.
 
-**Programa:** Tecnología en Análisis y Desarrollo de Software – SENA.
+**Programa:** Pruebas de software - Ingeniería de Software
